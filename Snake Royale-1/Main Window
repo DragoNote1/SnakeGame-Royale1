@@ -1,0 +1,90 @@
+from turtle import width
+import pygame
+import sys
+import os
+
+# Initialize pygame
+pygame.font.init()
+pygame.init()
+
+#Display constants
+FPS = 60
+WIDTH=1200
+HEIGHT=650
+
+# Things on display
+app_surface = pygame.display.set_mode((WIDTH,HEIGHT))
+pygame.display.set_caption("Snake Game Royale")
+MAIN_SCREEN_IMAGE=pygame.image.load(os.path.join('Assets','Main_display image.png'))
+MAIN_SCREEN=pygame.transform.scale(MAIN_SCREEN_IMAGE,(WIDTH,HEIGHT))
+SNAKE_LOGO_IMAGE_SOURCE=pygame.image.load(os.path.join('Assets','Snake Royale logo.png'))
+SNAKE_LOGO=pygame.transform.scale(SNAKE_LOGO_IMAGE_SOURCE,(350,100))
+play_image=pygame.image.load(os.path.join('Assets','Play.png'))
+
+#creating a play button
+PLAY=pygame.transform.scale(play_image,(150,100))
+def is_play_button_pressed():
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if 505 + 150 > mouse[0] > 505 and 310 + 100 > mouse[1] > 310:
+     play_image=pygame.image.load(os.path.join('Assets','PlayHighlight.png'))
+     PLAY=pygame.transform.scale(play_image,(150,100))
+     app_surface.blit(PLAY,(505,310))
+     pygame.display.update()
+     if click[0] == 1:
+            #define here how it switches  off one window and opens another
+
+            return True
+    return False
+
+#My functions
+def draw_main():
+    
+    app_surface.blit(PLAY,(525,100))
+    app_surface.fill((100,200,150))
+    app_surface.blit(MAIN_SCREEN,(0,0))
+    app_surface.blit(SNAKE_LOGO,(350,200))
+    app_surface.blit(PLAY,(505,310))
+    pygame.display.update()
+
+#play window
+def play_window():
+    app_surface.fill((100,200,150))
+    app_surface.blit(MAIN_SCREEN,(0,0))
+    app_surface.blit(SNAKE_LOGO,(350,200))
+    pygame.display.update()
+     
+
+
+
+# Main loop
+def main():
+    clock = pygame.time.Clock()
+    running = True
+    main_music=pygame.mixer.music.load(os.path.join('Assets','Arizona-Sunset.mp3'))
+    pygame.mixer.music.play(-1) 
+    while running:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+       # for event in pygame.event.get():
+                #define here the situation to close this window
+               #running = False
+        is_play_button_pressed()
+        draw_main()
+    pygame.quit()
+    sys.exit()
+if __name__ == "__main__":
+     main()
+
+
+
+
+
+
+
+
+
+
+
